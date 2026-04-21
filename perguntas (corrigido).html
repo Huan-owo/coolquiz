@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin:0;
+    }
+    .quiz-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #d9d9d9;
+      width: 100%;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+      position:relative;
+      z-index:3;
+    }
+      button{
+      display: block;
+      font-size: 1rem;
+      margin: 10px auto;
+      padding: 10px;
+      gap: 1.5vw;
+      width: 50vw;
+      min-width:190px;
+      max-width:212px;
+      cursor: pointer;
+      border-radius:90px;
+      background-color: #c2c2c2;
+    }
+  #background {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    filter: brightness(50%);
+    position: absolute;
+    z-index: 1;
+    } 
+    #pergunta{
+      font-size: 1.2rem;
+    }
+    
+   @media (min-width: 480px){
+     button{
+      display: block;
+      font-size: 1.2rem;
+      margin: 10px auto;
+      padding: 10px;
+      gap: 1.5vw;
+      width: 50vw;
+      min-width:212px;
+      max-width:260px;
+      cursor: pointer;
+    }
+     #pergunta{
+      font-size: 1.5rem;
+    }
+   }
+  @media (min-width: 768px){
+    button{
+      display: block;
+      font-size: 1.5rem;
+      margin: 10px auto;
+      padding: 10px;
+      gap: 1.5vw;
+      width: 50vw;
+      min-width:260px;
+      max-width:315px;
+      cursor: pointer;
+    }
+     #pergunta{
+      font-size: 2rem;
+    }
+    #respostas{
+      width:600px;
+    }
+  }
+    @media (min-width: 1200px){
+      button{
+      display: block;
+      font-size: 2rem;
+      margin: 10px auto;
+      padding: 10px;
+      gap: 1.5vw;
+      width: 50vw;
+      min-width:315px;
+      max-width:425px;
+      cursor: pointer;
+    }
+     #pergunta{
+      font-size: 2.5rem;
+    }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+     <img id="background" src="https://i.pinimg.com/originals/15/5b/d9/155bd98f77b8118488393496f1a95330.gif">
+    <div class="quiz-container">
+      <h2 id="pergunta"></h2>
+      <div id="respostas"></div>
+    </div>
+  </main>
+
+  <script>
+    const perguntas = [
+      {
+        pergunta: "Qual a capital do Brasil?",
+        respostas: ["Rio de Janeiro", "Brasília", "São Paulo","Venezuela"],
+        correta: 1
+      },
+      {
+        pergunta: "2 + 2 = ?",
+        respostas: ["3", "4", "5", "22"],
+        correta: 1
+      },
+      {
+        pergunta: "É um país da Europa...",
+        respostas: ["Africa", "Irã", "Russia"],
+        correta: 2
+      },
+      {
+        pergunta: "Qual o nome da clara do ovo?",
+        respostas: ["Gema", "Guema", "Clara", "Alfredooh"],
+        correta: 2
+      }
+    ];
+
+    let indiceAtual = 0;
+
+    function mostrarPergunta() {
+      const pergunta = perguntas[indiceAtual];
+
+      document.getElementById("pergunta").innerText = pergunta.pergunta;
+
+      const respostasDiv = document.getElementById("respostas");
+      respostasDiv.innerHTML = "";
+
+      pergunta.respostas.forEach((resp, i) => {
+        const btn = document.createElement("button");
+        btn.innerText = resp;
+
+        btn.onclick = () => {
+          if (i === pergunta.correta) {
+            mostrarFeedback(true);
+          } else {
+            mostrarFeedback(false);
+          }
+        };
+
+        respostasDiv.appendChild(btn);
+      });
+    }
+
+    function mostrarFeedback(acertou) {
+      const container = document.querySelector(".quiz-container");
+
+      container.innerHTML = `
+        <h2>${acertou ? "✅ Acertou!" : "❌ Errou!"}</h2>
+        <button onclick="proximaPergunta()">Continuar</button>
+      `;
+    }
+
+    function proximaPergunta() {
+      indiceAtual++;
+
+      if (indiceAtual < perguntas.length) {
+        document.querySelector(".quiz-container").innerHTML = `
+          <h2 id="pergunta"></h2>
+          <div id="respostas"></div>
+        `;
+        mostrarPergunta();
+      } else {
+        document.querySelector(".quiz-container").innerHTML = `
+          <h2>🎉 Fim do quiz!</h2>
+        `;
+      }
+    }
+
+    mostrarPergunta();
+  </script>
+</body>
+</html>
