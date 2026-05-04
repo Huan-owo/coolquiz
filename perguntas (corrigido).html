@@ -48,6 +48,9 @@
     #pergunta{
       font-size: 1.2rem;
     }
+    #alfredo {
+      width: 40%;
+    }
     
    @media (min-width: 480px){
      button{
@@ -113,28 +116,46 @@
   </main>
 
   <script>
+    let pontuacao = 0;
     const perguntas = [
       {
         pergunta: "Qual a capital do Brasil?",
-        respostas: ["Rio de Janeiro", "Brasília", "São Paulo","Venezuela"],
-        correta: 1
+        respostas: [ {texto: "Rio de Janeiro", pontos: 2}, 
+                    {texto: "Brasília", pontos: 4}, 
+                    {texto:"São Paulo", pontos: 8},
+                    {texto:"Venezuela", pontos: 100}],
+                    correta: 1
       },
       {
         pergunta: "2 + 2 = ?",
-        respostas: ["3", "4", "5", "22"],
-        correta: 1
+        respostas: [ {texto: "3", pontos: 2}, 
+                    {texto: "4", pontos: 4}, 
+                    {texto:"5", pontos: 8},
+                    {texto:"22", pontos: 100}],
+                    correta: 1
       },
       {
         pergunta: "É um país da Europa...",
-        respostas: ["Africa", "Irã", "Russia"],
-        correta: 2
+        respostas: [ {texto: "Africa", pontos: 2}, 
+                    {texto: "Irã", pontos: 4}, 
+                    {texto:"Russia", pontos: 8}],
+                    correta: 2
       },
       {
         pergunta: "Qual o nome da clara do ovo?",
-        respostas: ["Gema", "Guema", "Clara", "Alfredooh"],
-        correta: 2
+        respostas: [ {texto: "Gema", pontos: 2}, 
+                    {texto: "Guema", pontos: 4}, 
+                    {texto:"Clara", pontos: 8},
+                    {texto:"Alfredooh", pontos: 99999}],
+                    correta: 2
       }
     ];
+    
+    const special_mensage = {
+      mensagem: "alfredohh", 
+      pontosN: 99999
+    }
+
 
     let indiceAtual = 0;
 
@@ -148,9 +169,11 @@
 
       pergunta.respostas.forEach((resp, i) => {
         const btn = document.createElement("button");
-        btn.innerText = resp;
+        btn.innerText = resp.texto;
 
         btn.onclick = () => {
+          pontuacao += resp.pontos; // 🔥 soma os pontos
+
           if (i === pergunta.correta) {
             mostrarFeedback(true);
           } else {
@@ -181,8 +204,19 @@
         `;
         mostrarPergunta();
       } else {
+        let mensagemFinal = "";
+        if (pontuacao >= special_mensage.pontosN){
+          mensagemFinal =mensagemFinal = `
+        <div class="conquista">
+          <h3>🏆 Conquista Desbloqueada:</h3>
+          <p>${special_mensage.mensagem}</p>
+          <img id="alfredo" src="https://media.printables.com/media/prints/609705/images/4843766_f3a15f19-e7ee-4661-b553-2533084ac8fa_dcb27d2e-db17-433d-8f60-1d129843482d/thumbs/inside/1280x960/png/th-387312948.webp">
+        </div>
+      `;   }
         document.querySelector(".quiz-container").innerHTML = `
           <h2>🎉 Fim do quiz!</h2>
+          <p>Sua pontuação foi: ${pontuacao}</p>
+          ${mensagemFinal}
         `;
       }
     }
