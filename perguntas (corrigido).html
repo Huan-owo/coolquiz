@@ -49,7 +49,25 @@
       font-size: 1.2rem;
     }
     #alfredo {
-      width: 40%;
+      width: 60%;
+    }
+    .conquista {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction: column;
+      border-radius:15px;
+      width: 70%;
+      height: 35vh;
+      background-color: #2f2f2f91;
+      gap:5px;
+    }
+    .concTitle{
+      font-size: 0.9rem;
+    }
+    .concmensage{
+      margin:0px;
+      margin-bottom: 4px;
     }
     
    @media (min-width: 480px){
@@ -208,14 +226,14 @@
         if (pontuacao >= special_mensage.pontosN){
           mensagemFinal =mensagemFinal = `
         <div class="conquista">
-          <h3>🏆 Conquista Desbloqueada:</h3>
-          <p>${special_mensage.mensagem}</p>
+          <h3 class="concTitle">🏆 Conquista Desbloqueada:</h3>
+          <p class="concmensage">${special_mensage.mensagem}</p>
           <img id="alfredo" src="https://media.printables.com/media/prints/609705/images/4843766_f3a15f19-e7ee-4661-b553-2533084ac8fa_dcb27d2e-db17-433d-8f60-1d129843482d/thumbs/inside/1280x960/png/th-387312948.webp">
         </div>
       `;   }
         document.querySelector(".quiz-container").innerHTML = `
           <h2>🎉 Fim do quiz!</h2>
-          <p>Sua pontuação foi: ${pontuacao}</p>
+          <p>Sua pontuação foi: <strong>${pontuacao}</strong></p>
           ${mensagemFinal}
         `;
       }
